@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Submit - Example Showing the form</title>
+</head>
+<body>
+<p>
+    Showing the form.
+</p>
+<br>
+<!-- th:object=${formTemplate} needs to match that of
+        model.addAttribute("formTemplate", new FormTemplate());
+     in FormSubmitController.java -> showForm(..)
+-->
+
+<form action="#" th:action="@{/form_submit_submit}" th:object="${formTemplate}" method="post">
+    <!-- match with FormTemplate.java -->
+    <p>Id: <input type="text" th:field="*{formName}" /></p>
+    <p>Message: <input type="text" th:field="*{formId}" /></p>
+    <p>Description: <input type="text" th:field="*{formLongDescription}"/></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Submit - Example Showing the result</title>
+</head>
+<body>
+    <p th:text="'name: ' + ${formTemplate.formName}" />
+    <p th:text="'id: ' + ${formTemplate.formId}" />
+    <p th:text="'longDescription: ' + ${formTemplate.formLongDescription}" />
+    <a href="/form_submit_get">Submit another message</a>
+</body>
+</html>

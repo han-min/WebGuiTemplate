@@ -1,0 +1,46 @@
+<html lang="EN">
+    <head>
+        <title>WebSocket Subscription</title>
+        <script src="resources/js/jquery-3.7.1.min.js"></script>
+        <script src="resources/js/sockjs.js"></script>
+        <script src="resources/js/stomp.js"></script>
+        <script>
+            $(document).ready(function() {
+                var heartbeat_interval = null;
+                $("#connect_button").click(function(){
+                    set_heartbeat(true);
+                    $("#connect_status").html("Connected");
+                });
+                $("#disconnect_button").click(function(){
+                    set_heartbeat(false);
+                    $("#connect_status").html("Disconnected");
+                });
+                function set_heartbeat(turn_on){
+                    if (turn_on && heartbeat_interval == null) {
+                        heartbeat_interval = setInterval(do_heartbeat, 5000);
+                        console.log("Start heartbeat interval");
+                    } else if (!turn_on && heartbeat_interval != null) {
+                        clearInterval(heartbeat_interval);
+                        heartbeat_interval = null;
+                        console.log("Stop heartbeat interval");
+                    } else {
+                        console.log("Ignore command" + turn_on + " " + (heartbeat_interval==null));
+                    }
+                };
+                function do_heartbeat(){
+                    //
+                };
+                //
+                console.log( "ready!" );
+            }); // document ready - end
+        </script>
+    </head>
+    <body>
+        <p>
+            <button id="connect_button">Connect</button>
+            <button id="disconnect_button">Disconnect</button>
+            <p id="connect_status" value="false"></p>
+        </p>
+        <p id="is_heartbeating" value="false"></p>
+    </body>
+</html>
