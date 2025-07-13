@@ -16,9 +16,13 @@
 
 <form action="#" th:action="@{/form_submit_submit}" th:object="${formTemplate}" method="post">
     <!-- match with FormTemplate.java -->
-    <p>Id: <input type="text" th:field="*{formName}" /></p>
-    <p>Message: <input type="text" th:field="*{formId}" /></p>
-    <p>Description: <input type="text" th:field="*{formLongDescription}"/></p>
+    <p>Name: <input type="text" th:field="*{formName}" /></p>
+    <p>Id: <input type="number" th:field="*{formId}" /></p>
+    <p>YesNo: <input type="checkbox" th:field="*{formYesNo}"/></p>
+    <p>Date: <input type="date" th:field="*{formDate}"/></p>
+    <p>DateTime: <input type="datetime-local" th:field="*{formDateTime}"/></p>
+    <p></p>
+    <br>
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
 </body>

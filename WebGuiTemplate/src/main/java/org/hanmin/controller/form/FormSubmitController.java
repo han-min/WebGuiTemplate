@@ -27,7 +27,8 @@ public class FormSubmitController {
         }
         model.addAttribute("name", theFormTemplate.getFormName());
         model.addAttribute("id", theFormTemplate.getFormId());
-        model.addAttribute("description", theFormTemplate.getFormLongDescription());
+        model.addAttribute("yesno", theFormTemplate.isFormYesNo());
+
         return "form_submit_result"; // templates/form_submit_result.html
     }
 
