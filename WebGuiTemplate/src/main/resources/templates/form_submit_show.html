@@ -5,6 +5,7 @@
     <title>Form Submit - Example Showing the form</title>
 </head>
 <body>
+<!-- This shows the form from the given Java object -->
 <p>
     Showing the form.
 </p>
@@ -13,12 +14,19 @@
         model.addAttribute("formTemplate", new FormTemplate());
      in FormSubmitController.java -> showForm(..)
 -->
-
 <form action="#" th:action="@{/form_submit_submit}" th:object="${formTemplate}" method="post">
-    <!-- match with FormTemplate.java -->
+    <!-- match with member variable name FormTemplate.java -->
     <p>Name: <input type="text" th:field="*{formName}" /></p>
     <p>Id: <input type="number" th:field="*{formId}" /></p>
     <p>YesNo: <input type="checkbox" th:field="*{formYesNo}"/></p>
+    <p>Importance:
+        <select th:field="*{formImportance}">
+            <option th:each="value : ${T(org.hanmin.controller.form.FormTemplate.FormImportance).values()}"
+                    th:value="${value}"
+                    th:text="${value}">
+            </option>
+        </select>
+    </p>
     <p>Date: <input type="date" th:field="*{formDate}"/></p>
     <p>DateTime: <input type="datetime-local" th:field="*{formDateTime}"/></p>
     <p></p>

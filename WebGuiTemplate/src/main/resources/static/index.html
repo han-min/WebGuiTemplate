@@ -1,10 +1,42 @@
 <html>
-<head><title>Test Index</title></head>
-<p>Test Index</p>
-<p><a href="/helloworld">hello world</a></p>
+<head>
+    <title>Test Index</title>
+    <script src="resources/js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#post_button").click(function(){
+                // using MyRestController
+                $.post("/helloworldpost", { name: "Mr Foo", id: "AB7123", age: "31" })
+                 .done(function(data){
+                    console.log(data);
+                    $("#post_button_result").html(data);
+                });
+            });
+            // run on document read
+            // <empty>
+        }); // end of document ready
+    </script>
+</head>
 <br>
-<p>Dynamic</p>
-<a href="/dynamic/helloworld">Dynamic hello world</a>
+<h1>Test Index</h1>
+<p><a href="/helloworld">hello world</a><code> MyRestController.java</code></p>
+
+<h1>Dynamic</h1>
+<p><a href="/dynamic/helloworld">Dynamic hello world</a><code> HelloWorldController.java</code></p>
+<p><a href="/helloworldparam?first=Ben&last=Kenobi">Hello Get with Param</a><code> MyRestController.java</code></p>
+
+<h1>Form Submit</h1>
+<p><a href="/form_submit_get">Form Submit</a><code> FormSubmitController.java</code></p>
+
+<h1>Post</h1>
+<!-- the key value is written in the javascript on the same page -->
+<p><button id="post_button">Post with key value data, result in line</button><code> MyRestController.java</code></p>
+<p><div id="post_button_result"></div></p>
+
+<h1>Chart</h1>
+<p><a href="/chart_sample.html">Static Chart</a><code> chart_sample.html</code></p>
+<p><a href="/chart_thymeleaf_static">Static Thymeleaf Chart</a><code> ChartJsStaticController.java</code></p>
+<p><a href="/chart_dynamic_rest.html">Dynamic Rest Chart</a><code> ChartJsRestController.java</code></p>
 
 <br>
 </html>

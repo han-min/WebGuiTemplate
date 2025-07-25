@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chart Dynamic Rest</title>
+    <!-- for basic chart info, see chart_sample.html -->
+    <script src="resources/js/chart/chart.umd.js"></script>
+    <script src="resources/js/jquery-3.7.1.min.js"></script>
+    <script>
+
+    </script>
+</head>
+<body>
+
+<canvas id="theLineChart" style="width:100%;max-width:700px"></canvas>
+
+<script>
+    var xValues = [10, 20, 30];
+    var yValues = [1,  2,  3];
+    //
+    var lineChart = new Chart("theLineChart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                label: "The Line Value",
+                fill: false,
+                pointRadius: 1,
+                borderColor: "rgba(255,0,0,0.5)",
+                data: yValues
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Chart.js Line Chart'
+                }
+            }
+        },
+    });
+    //
+    function get_update_x_array(chart){
+        $.post("/api/chart_data", { axis: "x", num_points: "50" })
+         .done(function(data){
+            console.log("Got X  " + data);
+            chart.data.labels = data;
+            chart.update();
+         });
+    }
+    function get_update_y_array(chart){
+        $.post("/api/chart_data", { axis: "y", num_points: "50" })
+         .done(function(data){
+            console.log("Got Y " + data);
+            chart.data.datasets[0].data = data;
+            chart.update();
+         });
+    }
+    //
+    function refresh_line_chart(chart){
+        console.log("refresh_line_chart triggered");
+        get_update_x_array(chart);
+        get_update_y_array(chart);
+    }
+    //
+    $(document).ready(function() {
+        $("#refresh_button").click(function(){
+            console.log("refresh_button clicked");
+            refresh_line_chart(lineChart);
+        });
+        // run on document read
+        // <empty>
+    }); // end of document ready
+    //
+    //setInterval(function(){
+    //        refresh_line_chart(lineChart); // in timer or button
+    //  }, 2000);
+</script>
+
+<p><button id="refresh_button">Refresh Button</button></p>
+
+</body>
+</html>

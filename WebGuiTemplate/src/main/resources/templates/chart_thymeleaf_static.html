@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Thymeleaf static chart.js</title>
+    <script src="resources/js/chart/chart.umd.js"></script>
+
+</head>
+<body>
+
+<canvas id="theLineChart" style="width:100%;max-width:700px"></canvas>
+
+<script th:inline="javascript">
+    // CDATA is for Thymeleaf injection
+    /*<![CDATA[*/
+    /*[[${session.userName}]]*/
+        xValues = /*[[${x_array}]]*/ null;
+        yValues = /*[[${y_array}]]*/ null;
+    /*]]>*/
+    console.log(xValues)
+    console.log(yValues)
+
+    new Chart("theLineChart", {
+    type: "line",
+    data: {
+        labels: xValues,
+        datasets: [{
+            label: "The Line Value",
+            fill: false,
+            pointRadius: 1,
+            borderColor: "rgba(255,0,0,0.5)",
+            data: yValues
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Chart.js Line Chart'
+            }
+        }
+    },
+    });
+</script>
+
+</body>
+</html>

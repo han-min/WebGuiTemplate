@@ -9,9 +9,14 @@ import java.util.Date;
 @Data
 public class FormTemplate {
 
+    public enum FormImportance {
+        LOW, NORMAL, HIGH, IMMEDIATE
+    }
+
     private String formName;
     private long formId;
     private boolean formYesNo;
+    private FormImportance formImportance = FormImportance.NORMAL;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date formDate;

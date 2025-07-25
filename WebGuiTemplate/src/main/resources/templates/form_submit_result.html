@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Form Submit - Example Showing the result</title>
+    <!-- this is showing the result of the given object -->
 </head>
 <body>
     <p th:text="'name: ' + ${formTemplate.formName}" />
     <p th:text="'id: ' + ${formTemplate.formId}" />
     <p th:text="'yesNo: ' + ${formTemplate.formYesNo}" />
+    <p th:text="'importance: ' + ${formTemplate.formImportance}" />
     <p th:text="'date: ' + ${formTemplate.formDate}" />
     <p th:text="'dateTime: ' + ${formTemplate.formDateTime}" />
     <a href="/form_submit_get">Submit another message</a>
