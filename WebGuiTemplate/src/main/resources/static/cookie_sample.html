@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cookie Sample</title>
+</head>
+<body>
+
+<form action="/api/set_cookie" method="post">
+    <!-- the 'cookie_value' in *name* needs to match that of CookieController.java RequestParam name-->
+    <label for="the_form_id_value">Value to set:</label><br>
+    <input type="text" id="the_form_id_value" name="cookie_value" value="Berries"><br><br>
+    <input type="submit" value="Submit">
+</form>
+
+<p><a href="/api/get_cookie">Read the cookie value</a><code> CookieController.java</code></p>
+
+
+</body>
+</html>

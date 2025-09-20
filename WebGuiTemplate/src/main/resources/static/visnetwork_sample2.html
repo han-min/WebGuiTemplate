@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Network</title>
+    <script
+            type="text/javascript"
+            src="resources/js/visnetwork/standalone/umd/vis-network.min.js"
+    ></script>
+    <style type="text/css">
+        #mynetwork {
+          width: 90%;
+          height: 90%;
+          border: 1px solid lightgray;
+        }
+    </style>
+</head>
+<body>
+<div id="mynetwork"></div>
+<script type="text/javascript">
+    var CACHE_GRP_LENGTH = 50;
+    var FXIX_GRP_LENGTH = 100;
+    var FXIX_CACHE_LENGTH = 200;
+    var FXIX_CORTEX_LENGTH = 400;
+    var LISTEDIX_CACHE_LENGTH = 200;
+    var LISTEDIX_LYNX_LENGTH = 50;
+    var LISTEDIX_FORCE_LENGTH = 200;
+    var FXIX_MDP_LENGTH = 50;
+    function draw() {
+      //
+      var nodes = [];
+      var edges = [];
+      // fx ix
+      nodes.push({ id: 'AlgoCacheStorage1', label: 'AlgoCacheStorage1', group: 'FxIx', value: 1 });
+      nodes.push({ id: 'AlgoCacheStorage2', label: 'AlgoCacheStorage2', group: 'FxIx', value: 1 });
+      nodes.push({ id: 'AlgoCacheProxy', label: 'AlgoCacheProxy', group: 'FxIx', value: 10 });
+      nodes.push({ id: 'AlgoCacheBridge', label: 'AlgoCacheBridge', group: 'FxIx', value: 1 });
+      nodes.push({ id: 'AlgoServer', label: 'AlgoServer', group: 'FxIx', value: 1});
+      nodes.push({ id: 'SmartOrderRouter', label: 'SmartOrderRouter', group: 'FxIx', value: 1});
+      nodes.push({ id: 'AlgoServerGamma', label: 'AlgoServerGamma', group: 'FxIx', value: 1});
+      nodes.push({ id: 'SmartOrderRouterGamma', label: 'SmartOrderRouterGamma', group: 'FxIx', value: 1});
+      nodes.push({ id: 'AlgoRouter', label: 'AlgoRouter', group: 'FxIx', value: 1});
+      nodes.push({ id: 'AlgoXFixGateway', label: 'AlgoXFixGateway', group: 'FxIx', value: 1});
+      nodes.push({ id: 'AlgoCircuitBreaker', label: 'AlgoCircuitBreaker', group: 'FxIx', value: 1});
+      nodes.push({ id: 'AlgoInsight', label: 'AlgoInsight', group: 'FxIx', value: 1});
+      nodes.push({ id: 'AlgoAlix', label: 'AlgoAlix', group: 'FxIx', value: 1});
+      nodes.push({ id: 'AlgoListedAdapter', label: 'AlgoListedAdapter', group: 'FxIx', value: 1});
+      // mdp/client
+      nodes.push({ id: 'Bloomberg', label: 'Bloomberg', group: 'mdp', value: 1});
+      nodes.push({ id: '360T', label: '360T', group: 'mdp', value: 1});
+      nodes.push({ id: 'FixClient', label: 'Client', group: 'mdp', value: 1});
+      // quartz
+      nodes.push({ id: 'QuartzFx', label: 'QuartzFx', group: 'QuartzFxGrp', value: 1});
+      nodes.push({ id: 'QuartzFxRealTime', label: 'QuartzFxRealTime', group: 'QuartzFxGrp', value: 1});
+      // listed
+      nodes.push({ id: 'ListedCacheStorage1', label: 'ListedCacheStorage1', group: 'ListedIx', value: 1 });
+      nodes.push({ id: 'ListedCacheStorage2', label: 'ListedCacheStorage2', group: 'ListedIx', value: 1 });
+      nodes.push({ id: 'ListedCacheProxy', label: 'ListedCacheProxy', group: 'ListedIx', value: 10 });
+      nodes.push({ id: 'ListedCacheBridge', label: 'ListedCacheBridge', group: 'ListedIx', value: 1 });
+      nodes.push({ id: 'ListedMultiplexer', label: 'ListedMultiplexer', group: 'ListedIx', value: 1});
+      nodes.push({ id: 'ListedRouter', label: 'ListedRouter', group: 'ListedIx', value: 1});
+      nodes.push({ id: 'ListedReport', label: 'ListedReport', group: 'ListedIx', value: 1});
+      nodes.push({ id: 'ListedAlix', label: 'ListedAlix', group: 'ListedIx', value: 1});
+      // Lynx
+      nodes.push({ id: 'LynxItp', label: 'LynxItp', group: 'LynxItpGrp', value: 10});
+      // Lynx external
+      nodes.push({ id: 'ForceUpstream', label: 'ForceUpstream', group: 'Force', value: 1});
+      nodes.push({ id: 'Edge', label: 'Edge', group: 'Force', value: 1});
+      // Externals
+      nodes.push({ id: 'CortexFx', label: 'CortexFx', group: 'Cortex', value: 50});
+      nodes.push({ id: 'CortexListed', label: 'CortexListed', group: 'Cortex', value: 50});
+      nodes.push({ id: 'AlgoXGui', label: 'AlgoXGui', group: 'Cortex', value: 50});
+      // ---- edges ---
+      //FX Cache
+      edges.push({ from: 'AlgoCacheStorage1', to: 'AlgoCacheProxy', length: CACHE_GRP_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'AlgoCacheStorage2', to: 'AlgoCacheProxy', length: CACHE_GRP_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'AlgoCacheBridge', to: 'AlgoCacheProxy', length: CACHE_GRP_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'AlgoServer', to: 'AlgoCacheProxy', length: FXIX_CACHE_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'SmartOrderRouter', to: 'AlgoCacheProxy', length: FXIX_CACHE_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'AlgoServerGamma', to: 'AlgoCacheProxy', length: FXIX_CACHE_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'SmartOrderRouterGamma', to: 'AlgoCacheProxy', length: FXIX_CACHE_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'AlgoRouter', to: 'AlgoCacheProxy', length: FXIX_CACHE_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'AlgoXFixGateway', to: 'AlgoCacheProxy', length: FXIX_CACHE_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'AlgoCircuitBreaker', to: 'AlgoCacheProxy', length: FXIX_CACHE_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'AlgoListedAdapter', to: 'AlgoCacheProxy', length: FXIX_CACHE_LENGTH, label: 'Coherence' });
+      //FX IX
+      edges.push({ from: 'AlgoServer', to: 'SmartOrderRouter', length: FXIX_GRP_LENGTH, label: 'Wire' });
+      edges.push({ from: 'AlgoServerGamma', to: 'SmartOrderRouterGamma', length: FXIX_GRP_LENGTH, label: 'Wire' });
+      edges.push({ from: 'AlgoAlix', to: 'AlgoInsight', length: FXIX_GRP_LENGTH, label: 'Wire' });
+      edges.push({ from: 'AlgoAlix', to: 'AlgoServer', length: FXIX_GRP_LENGTH, label: 'Wire' });
+      //FX IX MDP
+      edges.push({ from: 'AlgoXFixGateway', to: 'Bloomberg', length: FXIX_MDP_LENGTH, label: 'FIX' });
+      edges.push({ from: 'AlgoXFixGateway', to: '360T', length: FXIX_MDP_LENGTH, label: 'FIX' });
+      edges.push({ from: 'AlgoXFixGateway', to: 'FixClient', length: FXIX_MDP_LENGTH, label: 'FIX' });
+      //Listed Cache
+      edges.push({ from: 'ListedCacheStorage1', to: 'ListedCacheProxy', length: CACHE_GRP_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'ListedCacheStorage2', to: 'ListedCacheProxy', length: CACHE_GRP_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'ListedCacheBridge', to: 'ListedCacheProxy', length: CACHE_GRP_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'ListedMultiplexer', to: 'ListedCacheProxy', length: LISTEDIX_CACHE_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'ListedRouter', to: 'ListedCacheProxy', length: LISTEDIX_CACHE_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'ListedReport', to: 'ListedCacheProxy', length: LISTEDIX_CACHE_LENGTH, label: 'Coherence' });
+      edges.push({ from: 'ListedAlix', to: 'ListedCacheProxy', length: LISTEDIX_CACHE_LENGTH, label: 'Coherence' });
+      //Listed IX
+      edges.push({ from: 'LynxItp', to: 'ListedMultiplexer', length: LISTEDIX_LYNX_LENGTH, label: 'LOP' });
+      edges.push({ from: 'LynxItp', to: 'ListedRouter', length: LISTEDIX_LYNX_LENGTH, label: 'LOP' });
+      edges.push({ from: 'LynxItp', to: 'ListedAlix', length: LISTEDIX_LYNX_LENGTH, label: 'LOP' });
+      edges.push({ from: 'LynxItp', to: 'AlgoListedAdapter', length: LISTEDIX_LYNX_LENGTH, label: 'LOP' });
+      edges.push({ from: 'LynxItp', to: 'ForceUpstream', length: LISTEDIX_FORCE_LENGTH, label: 'LOP' });
+      edges.push({ from: 'LynxItp', to: 'Edge', length: LISTEDIX_FORCE_LENGTH, label: 'LOP' });
+      //QuartzFx
+      edges.push({ from: 'QuartzFx', to: 'QuartzFxRealTime', length: FXIX_GRP_LENGTH, label: 'Wire' });
+      edges.push({ from: 'QuartzFxRealTime', to: 'AlgoInsight', length: FXIX_GRP_LENGTH, label: 'Wire' });
+      //CortexFx
+      edges.push({ from: 'AlgoCacheBridge', to: 'CortexFx', length: FXIX_CORTEX_LENGTH, label: 'Wire' });
+      edges.push({ from: 'AlgoCacheBridge', to: 'AlgoXGui', length: FXIX_CORTEX_LENGTH, label: 'Wire' });
+      edges.push({ from: 'AlgoInsight', to: 'CortexFx', length: FXIX_CORTEX_LENGTH, label: 'Wire' });
+      edges.push({ from: 'AlgoAlix', to: 'CortexFx', length: FXIX_CORTEX_LENGTH, label: 'Wire' });
+      edges.push({ from: 'AlgoRouter', to: 'CortexFx', length: FXIX_CORTEX_LENGTH, label: 'Wire' });
+      edges.push({ from: 'QuartzFx', to: 'CortexFx', length: FXIX_CORTEX_LENGTH, label: 'Wire' });
+      //CortexListed
+      edges.push({ from: 'ListedCacheBridge', to: 'CortexListed', length: FXIX_CORTEX_LENGTH, label: 'Wire' });
+      edges.push({ from: 'ListedMultiplexer', to: 'CortexListed', length: FXIX_CORTEX_LENGTH, label: 'Wire' });
+      edges.push({ from: 'ListedAlix', to: 'CortexListed', length: FXIX_CORTEX_LENGTH, label: 'Wire' });
+      // options
+      var options = {
+        edges: {
+            color: 'gray',
+            smooth: true,
+        },
+        groups: {
+            FxIx: {
+                shape: 'square',
+                color: '#9999FF'
+            },
+            ListedIx: {
+                shape: 'square',
+                color: '#99EEFF'
+            },
+            LynxItpGrp: {
+                shape: 'square',
+                color: '#EE9999'
+            },
+            Cortex: {
+                shape: 'ellipse',
+                color: '#BBBBBB'
+            },
+            mdp: {
+                shape: 'ellipse',
+                color: '#BBBBBB'
+            },
+            Force: {
+                shape: 'ellipse',
+                color: '#BBBBBB'
+            },
+            QuartzFxGrp: {
+                shape: 'square',
+                color: '#99DD99'
+            }
+        },
+        width: (window.innerWidth - 25) + "px",
+	    height: (window.innerHeight - 75) + "px"
+      };
+      // create the network
+      var container = document.getElementById("mynetwork");
+      var data = {
+        nodes: nodes,
+        edges: edges,
+      };
+      network = new vis.Network(container, data, options);
+    }
+    //
+    draw();
+</script>
+</body>
+</html>
